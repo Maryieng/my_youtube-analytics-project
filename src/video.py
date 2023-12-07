@@ -13,6 +13,8 @@ class Video(Channel):
         self.url = 'https://www.youtube.com/watch?v=' + self.id_video
         self.number_view = self.video['items'][0]['statistics']['viewCount']
         self.number_likes = self.video['items'][0]['statistics']['likeCount']
+        self.duration = self.video["items"][0]['contentDetails']['duration']
+        self.likes_count = self.video["items"][0]["statistics"]["likeCount"]
 
         def __str__(self):
             return f'{self.title}'
