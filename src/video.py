@@ -5,16 +5,27 @@ from src.channel import Channel
 
 class Video(Channel):
     def __init__(self, id_video: Any) -> None:
-        self.id_video = id_video
-        youtube = self.get_service()
-        self.video = (youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails', id=self.id_video)
-                      .execute())
-        self.title = self.video['items'][0]['snippet']['title']
-        self.url = 'https://www.youtube.com/watch?v=' + self.id_video
-        self.number_view = self.video['items'][0]['statistics']['viewCount']
-        self.number_likes = self.video['items'][0]['statistics']['likeCount']
-        self.duration = self.video["items"][0]['contentDetails']['duration']
-        self.likes_count = self.video["items"][0]["statistics"]["likeCount"]
+        try:
+            self.id_video = id_video
+            youtube = self.get_service()
+            self.video = (youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails', id=self.id_video)
+                          .execute())
+            self.title = self.video['items'][0]['snippet']['title']
+            self.url = 'https://www.youtube.com/watch?v=' + self.id_video
+            self.number_view = self.video['items'][0]['statistics']['viewCount']
+            self.number_likes = self.video['items'][0]['statistics']['likeCount']
+            self.duration = self.video["items"][0]['contentDetails']['duration']
+            self.likes_count = self.video["items"][0]["statistics"]["likeCount"]
+        except Exception:
+            self.id_video = id_video
+            youtube = None
+            self.video = None
+            self.title = None
+            self.url = None
+            self.number_view = None
+            self.number_likes = None
+            self.duration = None
+            self.likes_count = None
 
         def __str__(self):
             return f'{self.title}'
